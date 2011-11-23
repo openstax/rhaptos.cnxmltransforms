@@ -8,11 +8,11 @@ from Products.PortalTransforms.utils import log
 
 dirname = os.path.dirname(__file__)
 
-class cnxml2html:
+class cnxml_to_html:
     implements(ITransform)
 
-    __name__ = "cnxml2html"
-    inputs = ("text/cnxml",)
+    __name__ = "cnxml_to_html"
+    inputs = ("application/cnxml+xml",)
     output = "text/html"
 
     def name(self):
@@ -32,4 +32,4 @@ class cnxml2html:
 
 
 def register():
-    return markdown()
+    return cnxml_to_html()
