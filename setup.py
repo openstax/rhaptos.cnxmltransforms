@@ -25,7 +25,7 @@ setup(name='rhaptos.cnxmltransforms',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          # -*- Extra requirements: -*-
+          'lxml',
       ],
       entry_points="""
       # -*- Entry points: -*-
