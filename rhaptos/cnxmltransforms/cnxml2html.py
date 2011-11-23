@@ -1,3 +1,4 @@
+import os
 from lxml import etree, html
 
 from zope.interface import implements
@@ -19,13 +20,12 @@ class cnxml2html:
 
     def convert(self, orig, data, **kwargs):
         cnxml = orig.decode('utf-8')
+        cnxmldoc = etree.fromstring(cnxml)
 
-        xslfile = open(os.path.join(dirname, 'cnxml2html.xsl'))
-        xslt_root = etree.XML(xslfile.read())
+        xslt_root = etree.parse(os.path.join(dirname, 'xsl', 'cnxml2html.xsl'))
         transform = etree.XSLT(xslt_root)
-        htmldoc = transform(cnxml)
+        htmldoc = transform(cnxmldoc)
         html = etree.tostring(htmldoc)
-        xslfile.close()
 
         data.setData(html)
         return data
