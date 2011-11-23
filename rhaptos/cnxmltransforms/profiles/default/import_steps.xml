@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<import-steps>
+    <import-step id="rhaptos.cnxmltransforms" version="20111123-01"
+                handler="rhaptos.cnxmltransforms.setuphandlers.install"
+                title="rhaptos.cnxmltransforms">
+        <dependency step="componentregistry"/>
+        rhaptos.cnxmltransforms installation step.
+    </import-step>
+</import-steps>
