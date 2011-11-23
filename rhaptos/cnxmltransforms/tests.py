@@ -23,7 +23,7 @@ class TestTransform(unittest.TestCase):
         cnxml = open('test.cnxml').read()
         transform = cnxml2html()
         data = datastream('test')
-        transform.covert(cnxml, data)
+        transform.convert(cnxml, data)
 
 def test_suite():
     from unittest import TestSuite, makeSuite
