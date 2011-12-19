@@ -19,15 +19,18 @@ class cnxml_to_html:
         return self.__name__
 
     def convert(self, orig, data, **kwargs):
-        cnxml = orig.decode('utf-8')
-        cnxmldoc = etree.fromstring(cnxml)
+        cnxmldoc = etree.fromstring(orig)
 
         xslt_root = etree.parse(os.path.join(dirname, 'xsl', 'cnxml2html.xsl'))
         transform = etree.XSLT(xslt_root)
         htmldoc = transform(cnxmldoc)
-        html = etree.tostring(htmldoc)
-
-        data.setData(html)
+        result = ''
+        # only return html inside the body tag
+        for e in htmldoc.xpath('//xhtml:body/*',
+                                namespaces={'xhtml':
+                                            'http://www.w3.org/1999/xhtml'}):
+            result += etree.tostring(e)
+        data.setData(result)
         return data
 
 
