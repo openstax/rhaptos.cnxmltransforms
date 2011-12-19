@@ -24,12 +24,13 @@ class cnxml_to_html:
         xslt_root = etree.parse(os.path.join(dirname, 'xsl', 'cnxml2html.xsl'))
         transform = etree.XSLT(xslt_root)
         htmldoc = transform(cnxmldoc)
-        result = ''
+        result = '<div>'
         # only return html inside the body tag
         for e in htmldoc.xpath('//xhtml:body/*',
                                 namespaces={'xhtml':
                                             'http://www.w3.org/1999/xhtml'}):
             result += etree.tostring(e)
+        result += '</div>'
         data.setData(result)
         return data
 
