@@ -22,7 +22,7 @@ class cnxml_to_eiphtml:
         cnxmldoc = etree.fromstring(orig)
 
         xslt_root = etree.parse(os.path.join(dirname, 'xsl',
-                                             'cnxml2eiphtml.xsl'))
+                                             'editInPlace.xsl'))
         transform = etree.XSLT(xslt_root)
         htmldoc = transform(cnxmldoc)
         result = '<div>'
