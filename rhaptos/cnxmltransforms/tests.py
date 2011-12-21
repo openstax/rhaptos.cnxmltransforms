@@ -6,7 +6,8 @@ from StringIO import StringIO
 
 from Products.PortalTransforms.data import datastream
 
-from rhaptos.cnxmltransforms.cnxml2html import cnxml2html
+from rhaptos.cnxmltransforms.cnxml2html import cnxml_to_html
+from rhaptos.cnxmltransforms.cnxml2eiphtml import cnxml_to_eiphtml
 
 dirname = os.path.dirname(__file__)
 
@@ -19,9 +20,15 @@ class TestTransform(unittest.TestCase):
     def tearDown(self):
         os.chdir(self.cwd)
 
-    def test_transform(self):
+    def test_cnxml2html(self):
         cnxml = open('test.cnxml').read()
-        transform = cnxml2html()
+        transform = cnxml_to_html()
+        data = datastream('test')
+        transform.convert(cnxml, data)
+
+    def test_cnxml2eiphtml(self):
+        cnxml = open('test.cnxml').read()
+        transform = cnxml_to_eiphtml()
         data = datastream('test')
         transform.convert(cnxml, data)
 
