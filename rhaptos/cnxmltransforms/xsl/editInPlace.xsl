@@ -6,7 +6,7 @@
   xmlns="http://www.w3.org/1999/xhtml">
 
   <!-- You should install the CNXML package and catalog so this can use a local copy-->
-  <xsl:import href="cnxml_render.xsl" />
+  <xsl:import href="cnxml2html.xsl" />
 
   <xsl:variable name="baseurl" select="/module/display/base/@href" />
   <xsl:variable name="authoremailstring">
