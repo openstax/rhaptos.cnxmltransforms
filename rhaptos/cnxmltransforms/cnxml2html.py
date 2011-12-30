@@ -1,5 +1,6 @@
 import os
-from lxml import etree, html
+from cStringIO import StringIO
+from lxml import etree
 
 from zope.interface import implements
 
@@ -19,16 +20,23 @@ class cnxml_to_html:
         return self.__name__
 
     def convert(self, orig, data, **kwargs):
-        cnxmldoc = etree.fromstring(orig)
+        parser = etree.XMLParser(resolve_entities=False)
+        cnxmldoc = etree.parse(StringIO(orig), parser)
 
         xslt_root = etree.parse(os.path.join(dirname, 'xsl', 'cnxml2html.xsl'))
         transform = etree.XSLT(xslt_root)
         htmldoc = transform(cnxmldoc)
+
+        nsmap = {'xhtml': 'http://www.w3.org/1999/xhtml'}
+
+        # delete the module header - we'll use Plone's title instead
+        header = htmldoc.find('//xhtml:div[@id="cnx_module_header"]',
+            namespaces=nsmap)
+        header.getparent().remove(header)
+
         result = '<div>'
         # only return html inside the body tag
-        for e in htmldoc.xpath('//xhtml:body/*',
-                                namespaces={'xhtml':
-                                            'http://www.w3.org/1999/xhtml'}):
+        for e in htmldoc.xpath('//xhtml:body/*', namespaces=nsmap):
             result += etree.tostring(e)
         result += '</div>'
         data.setData(result)
