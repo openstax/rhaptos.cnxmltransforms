@@ -30,8 +30,8 @@ class cnxml_to_html:
         nsmap = {'xhtml': 'http://www.w3.org/1999/xhtml'}
 
         # delete the module header - we'll use Plone's title instead
-        header = htmldoc.find('//xhtml:div[@id="cnx_module_header"]',
-            namespaces=nsmap)
+        header = htmldoc.xpath('//xhtml:div[@id="cnx_module_header"]',
+                               namespaces=nsmap)[0]
         header.getparent().remove(header)
 
         result = '<div>'
